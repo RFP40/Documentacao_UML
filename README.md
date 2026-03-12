@@ -7,36 +7,32 @@ O **Nex_TI** é um sistema web educacional focado na metodologia de **Estudo Ati
 
 ## 1. Requisitos Funcionais (RF)
 
-- **RF01 - Autenticação e Gestão de Perfis:** O sistema deve permitir o cadastro, login e gerenciamento de dois níveis de acesso: Administrador (gestão de usuários e conteúdo) e Aluno (consumo de conteúdo e gamificação).
-- **RF02 - Gestão de Estudos (Flashcards):** O sistema deve apresentar os conteúdos em formato de flashcards (frente e verso), permitindo que o aluno revele a resposta e registre seu resultado (Acerto ou Erro).
-- **RF03 - Sistema de Gamificação (Core):** O sistema deve calcular e atribuir dinamicamente Pontos de Experiência (XP) e Moedas Virtuais (Coins) a cada flashcard respondido corretamente.
-- **RF04 - Progressão e Nivelamento:** O sistema deve atualizar automaticamente o Rank/Nível do aluno com base no XP acumulado e realizar um teste diagnóstico no primeiro acesso para definir o nível inicial.
-- **RF05 - Gestão de Conteúdo e Desbloqueio:** O sistema deve permitir o bloqueio de Fases e Módulos (ex: Fases Bônus), exigindo que o aluno utilize suas Moedas (Coins) ou atinja um nível específico para liberá-los.
-- **RF06 - Relatórios de Desempenho:** O sistema deve gerar painéis de acompanhamento (Dashboards) mostrando o progresso, as estatísticas de acertos e o nível individual exclusivamente para o próprio aluno.
-- **RF07 - Suporte por Agente Especialista (IA):** O sistema deve integrar uma interface de comunicação com um Agente Especialista (Inteligência Artificial) para fornecer suporte em tempo real, permitindo ao aluno tirar dúvidas e aprofundar as explicações sobre as cartas estudadas.
+- **RF01 - Autenticação e Gestão de Perfis:** O sistema deve permitir o cadastro autônomo de novos usuários na tela de login, além de gerenciar três níveis de acesso: Administrador (gestão de infraestrutura e permissões), Tutor (gestão de conteúdo e pedagógica) e Aluno (consumo de conteúdo e gamificação).
+- **RF02 - Gestão de Estudos e Flashcards:** O sistema deve apresentar os conteúdos das disciplinas em formato de flashcards (frente e verso), permitindo que o aluno registre seus acertos e erros. Além disso, o sistema deve fornecer uma ferramenta para que o aluno crie e armazene seus próprios flashcards personalizados de forma local.
+- **RF03 - Gamificação, Economia e Progressão:** O motor do sistema deve gerenciar a jornada do aluno de ponta a ponta: realizando um teste de nivelamento no primeiro acesso, atribuindo Pontos de Experiência (XP) e Moedas (Coins) a cada acerto, atualizando seu Rank automaticamente e permitindo o uso do saldo de moedas para o desbloqueio de Módulos e Fases Bônus na loja virtual.
+- **RF04 - Painéis e Relatórios de Desempenho:** O sistema deve gerar painéis de acompanhamento (Dashboards) mostrando o progresso e estatísticas individuais para o aluno, além de relatórios gerenciais consolidados do desempenho geral da turma para os Tutores.
+- **RF05 - Suporte em Níveis (IA e Tutor):** O sistema deve fornecer uma interface de suporte inicial via Agente Especialista (Inteligência Artificial) para dúvidas rápidas, permitindo ao aluno escalar a dúvida para um chamado (ticket) com o Tutor humano caso o problema não seja resolvido pela IA.
 
 ---
 
 ## 2. Requisitos Não Funcionais (RNF)
 
-- **RNF01 - Arquitetura (Integração):** Em sua fase atual (MVP), o front-end e a lógica de negócio rodam em HTML/CSS/JS. A arquitetura alvo (desenvolvimento futuro) prevê a comunicação com um banco de dados (SQL Server) através de uma API RESTful em C# (.NET).
-- **RNF02 - Responsividade (Mobile First):** A interface de usuário (UI) deve se adaptar perfeitamente a dispositivos móveis, tablets e desktops, garantindo a usabilidade e leitura sem quebra de layout.
-- **RNF03 - Desempenho (Tempo de Resposta):** O tempo de transição ao virar uma carta (flashcard) e a computação de XP/Moedas na tela devem ocorrer em no máximo 1 segundo, garantindo a imersão no estudo.
-- **RNF04 - Segurança de Dados:** Na integração futura, as senhas dos usuários deverão ser armazenadas de forma criptografada (uso de Hash), e as rotas da API protegidas por tokens de autenticação.
-- **RNF05 - Usabilidade e Identidade Visual:** O sistema deve manter um padrão de Dark Mode contínuo (estética de terminal/código) e fornecer feedback visual e imediato (cores indicativas e animações) nas ações de acerto ou erro.
-- **RNF06 - Disponibilidade:** O sistema web deve ser projetado para alta disponibilidade, com o front-end hospedado em serviços de nuvem estáveis (ex: GitHub Pages) para acesso contínuo dos alunos.
+- **RNF01 - Arquitetura e Disponibilidade:** O sistema deve operar inicialmente como um MVP *serverless* hospedado em nuvem de alta disponibilidade (ex: GitHub Pages). A arquitetura escalar futura prevê a integração do front-end com uma API RESTful desenvolvida em C# (.NET) e persistência de dados em Microsoft SQL Server.
+- **RNF02 - Usabilidade e Responsividade (UX/UI):** A interface deve adotar a abordagem *Mobile First*, adaptando-se fluidamente a smartphones, tablets e desktops. O design deve manter uma estética *Dark Mode* de terminal de código, fornecendo feedback visual e imediato (animações e cores) para cada ação de acerto ou erro do usuário.
+- **RNF03 - Desempenho e Fluidez:** O sistema deve garantir a imersão do aluno durante os estudos, limitando a no máximo 1 segundo o tempo de resposta para virar uma carta (flashcard) e para computar/renderizar as recompensas (XP e Moedas) na tela.
+- **RNF04 - Segurança de Dados:** Para a fase de integração com o banco de dados, o sistema deve garantir a proteção das informações sensíveis, armazenando as senhas dos usuários de forma criptografada (algoritmo de Hash) e protegendo as rotas da API através de tokens de autenticação (ex: JWT).
 
 ---
 
 ## 3. Histórias de Usuário (User Stories)
 
-- **US01 - Diagnóstico Inicial:** Como Aluno, eu quero realizar um teste diagnóstico no meu primeiro acesso, para que o sistema defina meu nível de XP inicial de forma justa.
-- **US02 - Estudo Ativo:** Como Aluno, eu quero interagir com flashcards (frente e verso) e registrar meus acertos ou erros, para que eu possa fixar o conteúdo acadêmico.
-- **US03 - Gamificação e Recompensa:** Como Aluno, eu quero ganhar XP e Moedas (Coins) ao acertar os flashcards, para que eu me sinta motivado a subir de Rank.
-- **US04 - Economia do Jogo:** Como Aluno, eu quero utilizar minhas Moedas acumuladas para desbloquear módulos bônus, para ter acesso a conteúdos exclusivos.
-- **US05 - Gestão de Conteúdo:** Como Administrador, eu quero criar e atualizar os flashcards das disciplinas, para que a plataforma se mantenha relevante e atualizada.
-- **US06 - Painel de Progresso:** Como Aluno, eu quero visualizar um painel com meu desempenho e histórico de acertos, para acompanhar minha evolução no sistema de forma autônoma.
-- **US07 - Suporte Inteligente:** Como Aluno, eu quero poder consultar um Agente Especialista (IA) durante as sessões de estudo, para esclarecer dúvidas técnicas de forma imediata.
+- **US01 - Acesso e Cadastro:** Como Visitante, eu quero poder criar uma conta nova diretamente pela tela de login, para ingressar rapidamente na plataforma como Aluno.
+- **US02 - Estudo Ativo e Criação de Cartas:** Como Aluno, eu quero interagir com flashcards para fixar o conteúdo e ter a opção de criar meus próprios decks, para focar nos assuntos que tenho mais dificuldade.
+- **US03 - Jornada Gamificada e Economia:** Como Aluno, eu quero realizar um teste de nivelamento inicial, ganhar XP/Moedas ao acertar as questões e usar meu saldo para desbloquear módulos, para manter meu engajamento e progressão no jogo.
+- **US04 - Acompanhamento Pessoal:** Como Aluno, eu quero visualizar um dashboard com meu desempenho e histórico, para acompanhar minha evolução acadêmica de forma autônoma.
+- **US05 - Suporte Integrado (Nível 1 e 2):** Como Aluno, eu quero consultar o Agente Especialista (IA) para dúvidas rápidas e poder escalar o problema para um Tutor humano, garantindo que meu aprendizado não fique travado.
+- **US06 - Gestão de Conteúdo Global:** Como Tutor, eu quero criar e atualizar os flashcards das disciplinas, para que o material da plataforma se mantenha preciso e atualizado.
+- **US07 - Acompanhamento Pedagógico:** Como Tutor, eu quero visualizar estatísticas de uso e desempenho da turma, para atuar de forma proativa com alunos inativos ou que precisem de intervenção.
 
 ---
 
